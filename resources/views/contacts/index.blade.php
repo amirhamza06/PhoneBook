@@ -21,8 +21,8 @@
             @foreach($contacts as $contact)
             <tr>
                 <td>{{$loop->index+1}}</td>
-                <td>{{$contact->firstname}}</td>
-                <td>{{$contact->lastname}}</td>
+                <td><a href="contacts/{{$contact->id}}/show" class= "text-dark">{{$contact->firstname}}</td>
+                <td>{{$contact->lastname}}</a></td>
                 <td>{{$contact->email}}</td>
                 <td>{{$contact->phone_1}}</td>
                 <td>{{$contact->phone_2}}</td>
@@ -38,5 +38,7 @@
             </tr>
             @endforeach
         </tbody>
+    </table>
+    {{$contacts->links()}}
     </div>
 @endsection

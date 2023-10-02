@@ -9,8 +9,9 @@ class ContactController extends Controller
 {
     public function index()
     {
-        $contacts = Contact::get();
-        return view('contacts.index',['contacts'=>$contacts]);
+        return view('contacts.index',[
+            'contacts'=> Contact::latest()->paginate(5)
+        ]);
     }
     public function create()
     {
@@ -49,15 +50,15 @@ class ContactController extends Controller
     }
     public function update(Request $request,$id)
     {
-        // $request->validate([
-        //     'firstname' => 'required',
-        //     'lastname' => 'required',
-        //     'email' =>'required',
-        //     'phone_1' =>'required'|'numeric',
-        //     'phone_2' =>'required'|'numeric',
-        //     'phone_3' =>'required'|'numeric',
-        //     'notes' =>'required'
-        // ]);
+        $validator = Validator::make($request->all(),[
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' =>'required',
+            'phone_1' =>'required'|'numeric',
+            'phone_2' =>'required'|'numeric',
+            'phone_3' =>'required'|'numeric',
+            'notes' =>'required'
+        ]);
         $contact = Contact::where('id',$id)->first();
 
         $contact->firstname=$request->firstname;
@@ -77,5 +78,11 @@ class ContactController extends Controller
         $contact = Contact::where('id',$id)->first();
         $contact->delete();
         return back()->withSuccess('Contact is Deleted');
+    }
+    public function show($id)
+    {
+        $contact = Contact::where('id',$id)->first();
+        
+        return view('contacts.show',['contact'=>$contact]);
     }
 }
