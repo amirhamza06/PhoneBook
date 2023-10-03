@@ -9,18 +9,24 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('contacts.index',[
+        $data = array('title'=> 'All Contacts');
+
+        return view('contacts.index',$data,[
             'contacts'=> Contact::latest()->paginate(5)
         ]);
     }
     public function create()
     {
-        return view('contacts.create');
+        $data = array('title'=> 'New Contact');
+        return view('contacts.create',$data);
     }
     public function store(Request $request)
     {
         
         $contact = new Contact;
+        if(isset($request->edit_id) && !empty($request->edit_id)){
+            $contact = $contact::find($request->edit_id);
+        }
         $contact->firstname=$request->firstname;
         $contact->lastname=$request->lastname;
         $contact->email=$request->email;
@@ -35,9 +41,12 @@ class ContactController extends Controller
 
     public function edit($id)
     {
-        $contact = Contact::where('id',$id)->first();
-        return view('contacts.edit',['contact'=> $contact]);
-        dd($id);
+       
+        $data = array(
+            'title'=> 'Edit Contact',
+            'edit' => Contact::find($id)->first());
+        return view('contacts.create',$data);
+        // return view('contacts.edit',['contact'=> $contact]);
     }
     public function update(Request $request,$id)
     {
@@ -65,7 +74,6 @@ class ContactController extends Controller
     public function show($id)
     {
         $contact = Contact::where('id',$id)->first();
-        
         return view('contacts.show',['contact'=>$contact]);
     }
 }
