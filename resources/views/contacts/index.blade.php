@@ -7,6 +7,7 @@
         <table class="table table-hover mt-2">
         <thead>
             <tr>
+                <th>ID</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Email</th>

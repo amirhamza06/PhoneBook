@@ -9,7 +9,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-       return view('contacts.index',[
+        return view('contacts.index',[
             'contacts'=> Contact::latest()->paginate(5)
         ]);
     }
@@ -19,6 +19,7 @@ class ContactController extends Controller
     }
     public function store(Request $request)
     {
+        
         $contact = new Contact;
         $contact->firstname=$request->firstname;
         $contact->lastname=$request->lastname;
@@ -40,7 +41,7 @@ class ContactController extends Controller
     }
     public function update(Request $request,$id)
     {
-        
+       
         $contact = Contact::where('id',$id)->first();
 
         $contact->firstname=$request->firstname;
