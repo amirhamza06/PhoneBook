@@ -9,7 +9,7 @@ class ContactController extends Controller
 {
     public function index()
     {
-        return view('contacts.index',[
+       return view('contacts.index',[
             'contacts'=> Contact::latest()->paginate(5)
         ]);
     }
@@ -19,16 +19,6 @@ class ContactController extends Controller
     }
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'firstname' => 'required',
-        //     'lastname' => 'required',
-        //     'email' =>'required',
-        //     'phone_1' =>'required'|'numeric',
-        //     'phone_2' =>'required'|'numeric',
-        //     'phone_3' =>'required'|'numeric',
-        //     'notes' =>'required'
-        // ]);
-
         $contact = new Contact;
         $contact->firstname=$request->firstname;
         $contact->lastname=$request->lastname;
@@ -50,15 +40,7 @@ class ContactController extends Controller
     }
     public function update(Request $request,$id)
     {
-        $validator = Validator::make($request->all(),[
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'email' =>'required',
-            'phone_1' =>'required'|'numeric',
-            'phone_2' =>'required'|'numeric',
-            'phone_3' =>'required'|'numeric',
-            'notes' =>'required'
-        ]);
+        
         $contact = Contact::where('id',$id)->first();
 
         $contact->firstname=$request->firstname;
